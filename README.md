@@ -127,7 +127,7 @@ final = adjusted × toleranceFactor × modeBoosts
 
 No build process or server required!
 
-## 🌐 Browser Support
+## Browser Support
 
 - Chrome 80+
 - Firefox 75+
@@ -149,7 +149,7 @@ No build process or server required!
 - [ ] Mobile app (React Native / Flutter)
 - [ ] Multi-month trend analysis
 
-## 📄 License
+## License
 
 MIT License 
 
