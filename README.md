@@ -1,4 +1,4 @@
-# 🎓 UNMESSIFY
+# UNMESSIFY
 
 > Smart Paid Mess Credits Planner & Decision Support System
 
@@ -8,7 +8,7 @@ UNMESSIFY is a web-based decision support application that helps students optimi
 ![Version](https://img.shields.io/badge/Version-1.0.0-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-## 🎯 Problem Statement
+## Problem Statement
 
 Students on paid mess plans receive ~₹6,000–₹6,500 credits monthly. Without proper tracking:
 - Credits often run out before month-end
@@ -30,7 +30,7 @@ Students on paid mess plans receive ~₹6,000–₹6,500 credits monthly. Withou
 | **LocalStorage Persistence** | Data persists across sessions |
 | **Export/Import** | Backup and restore your data as JSON |
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -57,7 +57,7 @@ Students on paid mess plans receive ~₹6,000–₹6,500 credits monthly. Withou
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## 📊 Data Models
+## Data Models
 
 ### UserProfile
 ```javascript
@@ -90,7 +90,7 @@ Students on paid mess plans receive ~₹6,000–₹6,500 credits monthly. Withou
 }
 ```
 
-## 🧮 Core Calculations
+## Core Calculations
 
 ### Daily Safe Limit
 ```
@@ -117,7 +117,7 @@ final = adjusted × toleranceFactor × modeBoosts
 | Expense Entry | Date, meal, item type, quantity, cost | Date within month, not future; Cost: ₹1-₹2,000 |
 | Preferences | Risk tolerance, daily cap, modes, thresholds | Logical bounds, live preview |
 
-## 🚀 Quick Start
+## Quick Start
 
 1. **Clone or download** this repository
 2. **Open `index.html`** in any modern browser
@@ -134,13 +134,13 @@ No build process or server required!
 - Safari 13+
 - Edge 80+
 
-## 📦 Dependencies
+## Dependencies
 
 - [Chart.js](https://www.chartjs.org/) v4.x (loaded via CDN)
 - [Inter Font](https://fonts.google.com/specimen/Inter) (Google Fonts)
 - [JetBrains Mono](https://fonts.google.com/specimen/JetBrains+Mono) (Google Fonts)
 
-## 🔮 Future Scope
+## Future Scope
 
 - [ ] Mess menu API integration
 - [ ] Browser push notifications for risk changes
@@ -151,7 +151,7 @@ No build process or server required!
 
 ## 📄 License
 
-MIT License - feel free to use and modify for your needs.
+MIT License 
 
 ---
 
