@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="UNMESSIFY - Smart Paid Mess Credits Planner & Decision Support System for optimizing your mess credit usage">
+    <title>UNMESSIFY | Smart Mess Credits Planner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <!-- Header with Status Strip -->
+    <header class="header">
+        <div class="header-brand">
+            <h1 class="logo">
+                <span class="logo-shapes">
+                    <span class="shape circle"></span>
+                    <span class="shape square"></span>
+                    <span class="shape triangle"></span>
+                </span>
+                UN<span class="logo-accent">MESSIFY</span>
+            </h1>
+            <span class="tagline">Smart Mess Credits Planner</span>
+        </div>
+        <div class="status-strip" id="statusStrip" role="status" aria-live="polite">
+            <div class="status-item">
+                <span class="status-label">Total</span>
+                <span class="status-value" id="totalCredits">₹0</span>
+            </div>
+            <div class="status-divider"></div>
+            <div class="status-item">
+                <span class="status-label">Spent</span>
+                <span class="status-value" id="spentCredits">₹0</span>
+            </div>
+            <div class="status-divider"></div>
+            <div class="status-item">
+                <span class="status-label">Remaining</span>
+                <span class="status-value highlight" id="remainingCredits">₹0</span>
+            </div>
+            <div class="status-divider"></div>
+            <div class="risk-badge-container">
+                <span class="risk-badge badge-safe" id="riskBadge"
+                    title="Risk is based on your burn rate vs remaining days">
+                    <span class="risk-icon">●</span>
+                    <span class="risk-text">Safe</span>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Onboarding Screen -->
+        <section id="onboardingScreen" class="onboarding-screen">
+            <div class="onboarding-card glass-card">
+                <div class="onboarding-icon">🎓</div>
+                <h2>Welcome to UNMESSIFY</h2>
+                <p>Your personal mess credits coach. Set up your profile to get started with smart insights and
+                    predictions.</p>
+                <button class="btn btn-primary btn-lg" id="startSetupBtn">
+                    Start Setup →
+                </button>
+            </div>
+        </section>
+
+        <!-- Main Dashboard (Three Column Layout) -->
+        <section id="dashboardSection" class="dashboard-grid hidden">
+            <!-- Column 1: Today & This Month -->
+            <section id="status-overview" class="dashboard-column">
+                <h2 class="column-title">Today & This Month</h2>
+
+                <div class="metric-card glass-card">
+                    <div class="metric-header">
+                        <span class="metric-icon">📊</span>
+                        <span class="metric-title">Today's Spend</span>
+                    </div>
+                    <div class="metric-body">
+                        <div class="metric-main">
+                            <span class="metric-value" id="todaySpend">₹0</span>
+                            <span class="metric-comparison" id="todayVsLimit">
+                                <span class="comparison-label">vs safe limit</span>
+                                <span class="comparison-value" id="dailySafeLimit">₹0</span>
+                            </span>
+                        </div>
+                        <div class="progress-bar" id="todayProgress">
+                            <div class="progress-fill safe" id="todayProgressFill" style="width: 0%"></div>
+                        </div>
+                        <span class="metric-hint" id="todayHint">Add expenses to track daily spending</span>
+                    </div>
+                </div>
+
+                <div class="metric-card glass-card">
+                    <div class="metric-header">
+                        <span class="metric-icon">🔥</span>
+                        <span class="metric-title">Burn Rate</span>
+                    </div>
+                    <div class="metric-body">
+                        <div class="burn-rate-display">
+                            <div class="burn-rate-item">
+                                <span class="burn-label">Your Rate</span>
+                                <span class="burn-value" id="currentBurnRate">₹0/day</span>
+                            </div>
+                            <div class="burn-vs">vs</div>
+                            <div class="burn-rate-item">
+                                <span class="burn-label">Target Rate</span>
+                                <span class="burn-value target" id="targetBurnRate">₹0/day</span>
+                            </div>
+                        </div>
+                        <div class="burn-rate-detail">
+                            <span class="detail-label">Last 7 days avg:</span>
+                            <span class="detail-value" id="burnRate7d">₹0/day</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-card glass-card">
+                    <div class="metric-header">
+                        <span class="metric-icon">📅</span>
+                        <span class="metric-title">Month Progress</span>
+                    </div>
+                    <div class="metric-body">
+                        <div class="month-progress-display">
+                            <span class="days-info" id="daysInfo">Day 0 of 30</span>
+                            <span class="credits-percent" id="creditsUsedPercent">0% used</span>
+                        </div>
+                        <div class="dual-progress">
+                            <div class="progress-track">
+                                <div class="progress-section time" id="timeProgress" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-section credits" id="creditsProgress" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-legend">
+                            <span class="legend-item"><span class="legend-dot time"></span>Time elapsed</span>
+                            <span class="legend-item"><span class="legend-dot credits"></span>Credits used</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Column 2: Predictions -->
+            <section id="predictions" class="dashboard-column">
+                <h2 class="column-title">Predictions</h2>
+
+                <div class="prediction-card glass-card" id="exhaustionCard">
+                    <div class="prediction-header">
+                        <span class="prediction-icon">🎯</span>
+                        <span class="prediction-title">Credit Exhaustion</span>
+                    </div>
+                    <div class="prediction-body">
+                        <div class="prediction-main" id="exhaustionPrediction">
+                            <span class="prediction-date">--</span>
+                            <span class="prediction-label">Predicted exhaustion date</span>
+                        </div>
+                        <div class="prediction-detail" id="surplusDeficit">
+                            <span class="detail-icon">💰</span>
+                            <span class="detail-text">Add expenses to see projection</span>
+                        </div>
+                        <div class="confidence-tag" id="confidenceTag">
+                            <span class="confidence-icon">ℹ️</span>
+                            <span class="confidence-text">Waiting for data...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Container -->
+                <div class="chart-card glass-card">
+                    <div class="chart-header">
+                        <span class="chart-title">Daily Spending Trend</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="dailySpendChart"></canvas>
+                    </div>
+                    <div class="chart-empty hidden" id="dailyChartEmpty">
+                        <span class="empty-icon">📈</span>
+                        <span class="empty-text">Add expenses to see trends</span>
+                    </div>
+                </div>
+
+                <div class="chart-card glass-card">
+                    <div class="chart-header">
+                        <span class="chart-title">Credit Depletion</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="depletionChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Column 3: Advice Panel -->
+            <section id="advice-panel" class="dashboard-column">
+                <h2 class="column-title">Smart Advice</h2>
+
+                <div class="advice-container" id="adviceContainer">
+                    <div class="advice-empty glass-card" id="adviceEmpty">
+                        <span class="advice-empty-icon">💡</span>
+                        <p>Add some expenses to get personalized recommendations.</p>
+                    </div>
+                </div>
+
+                <!-- Category Breakdown Chart -->
+                <div class="chart-card glass-card">
+                    <div class="chart-header">
+                        <span class="chart-title">Spending by Category</span>
+                    </div>
+                    <div class="chart-container chart-container-donut">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                    <div class="chart-empty hidden" id="categoryChartEmpty">
+                        <span class="empty-icon">🥘</span>
+                        <span class="empty-text">No categories to display yet</span>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- Forms Section -->
+        <section id="forms" class="forms-section hidden">
+            <div class="forms-container">
+                <!-- Tab Navigation -->
+                <div class="tabs" role="tablist">
+                    <button class="tab active" role="tab" aria-selected="true" data-tab="setup">
+                        <span class="tab-icon">⚙️</span>
+                        Setup Credits
+                    </button>
+                    <button class="tab" role="tab" aria-selected="false" data-tab="expense">
+                        <span class="tab-icon">➕</span>
+                        Add Expense
+                    </button>
+                    <button class="tab" role="tab" aria-selected="false" data-tab="preferences">
+                        <span class="tab-icon">🎚️</span>
+                        Preferences
+                    </button>
+                </div>
+
+                <!-- Tab Panels -->
+                <div class="tab-panels">
+                    <!-- Setup Credits Form -->
+                    <div class="tab-panel active" id="setupPanel" role="tabpanel">
+                        <form id="setupForm" class="form glass-card" novalidate>
+                            <h3 class="form-title">Credit Setup</h3>
+
+                            <div class="form-group">
+                                <label for="monthlyCredits" class="form-label">Monthly Credits (₹)</label>
+                                <input type="number" id="monthlyCredits" name="monthlyCredits" class="form-input"
+                                    placeholder="6000" min="3000" max="10000" value="6000" required>
+                                <span class="form-hint">Typical range: ₹3,000 - ₹10,000</span>
+                                <span class="form-error" id="monthlyCreditsError"></span>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="monthDays" class="form-label">Days in Month</label>
+                                    <input type="number" id="monthDays" name="monthDays" class="form-input"
+                                        placeholder="30" min="28" max="31" value="30" required>
+                                    <span class="form-error" id="monthDaysError"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="startDate" class="form-label">Start Date</label>
+                                    <input type="date" id="startDate" name="startDate" class="form-input" required>
+                                    <span class="form-error" id="startDateError"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="userType" class="form-label">User Type</label>
+                                <select id="userType" name="userType" class="form-select" required>
+                                    <option value="hostel_student">Hostel Student</option>
+                                    <option value="day_scholar">Day Scholar</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Dietary Preference</label>
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="vegetarian" value="false" checked>
+                                        <span class="radio-text">Non-Vegetarian</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="vegetarian" value="true">
+                                        <span class="radio-text">Vegetarian</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Save Setup</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Add Expense Form -->
+                    <div class="tab-panel" id="expensePanel" role="tabpanel">
+                        <form id="expenseForm" class="form glass-card" novalidate>
+                            <h3 class="form-title">Add Expense</h3>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="expenseDate" class="form-label">Date</label>
+                                    <input type="date" id="expenseDate" name="date" class="form-input" required>
+                                    <span class="form-error" id="expenseDateError"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="mealType" class="form-label">Meal</label>
+                                    <select id="mealType" name="mealType" class="form-select" required>
+                                        <option value="breakfast">Breakfast</option>
+                                        <option value="lunch" selected>Lunch</option>
+                                        <option value="snacks">Snacks</option>
+                                        <option value="dinner">Dinner</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="itemType" class="form-label">Item Category</label>
+                                    <select id="itemType" name="itemType" class="form-select" required>
+                                        <option value="veg">Veg Items</option>
+                                        <option value="paneer">Paneer</option>
+                                        <option value="chicken">Chicken</option>
+                                        <option value="dessert">Dessert</option>
+                                        <option value="beverage">Beverage</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="quantity" class="form-label">Quantity</label>
+                                    <input type="number" id="quantity" name="quantity" class="form-input"
+                                        placeholder="1" min="1" max="10" value="1" required>
+                                    <span class="form-error" id="quantityError"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cost" class="form-label">Cost (₹)</label>
+                                <input type="number" id="cost" name="cost" class="form-input" placeholder="100" min="1"
+                                    max="2000" required>
+                                <span class="form-hint">Typical range: ₹10 - ₹500</span>
+                                <span class="form-error" id="costError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="notes" class="form-label">Notes (Optional)</label>
+                                <input type="text" id="notes" name="notes" class="form-input"
+                                    placeholder="e.g., Special chicken biryani">
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Add Expense</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Preferences Form -->
+                    <div class="tab-panel" id="preferencesPanel" role="tabpanel">
+                        <form id="preferencesForm" class="form glass-card" novalidate>
+                            <h3 class="form-title">Preferences & Alerts</h3>
+
+                            <div class="form-group">
+                                <label for="riskTolerance" class="form-label">Risk Tolerance</label>
+                                <select id="riskTolerance" name="riskTolerance" class="form-select">
+                                    <option value="low">Low (Conservative)</option>
+                                    <option value="medium" selected>Medium (Balanced)</option>
+                                    <option value="high">High (Flexible)</option>
+                                </select>
+                                <span class="form-hint">Lower tolerance = stricter daily limits</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="maxSpendPerDay" class="form-label">Daily Spend Cap (₹)</label>
+                                <input type="number" id="maxSpendPerDay" name="maxSpendPerDay" class="form-input"
+                                    placeholder="Optional">
+                                <span class="form-hint">Leave empty for automatic calculation</span>
+                                <span class="form-error" id="maxSpendError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Special Modes</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="weekendBoost" id="weekendBoost">
+                                        <span class="checkbox-box"></span>
+                                        <span class="checkbox-text">Weekend Boost (Higher weekend limits)</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="examMode" id="examMode">
+                                        <span class="checkbox-box"></span>
+                                        <span class="checkbox-text">Exam Mode (Account for snacks/coffee)</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Alert Thresholds</label>
+                                <div class="threshold-group">
+                                    <div class="threshold-item">
+                                        <label for="warningThreshold">Warning at</label>
+                                        <input type="number" id="warningThreshold" name="warningThreshold"
+                                            class="form-input-sm" value="70" min="50" max="80">
+                                        <span>% used</span>
+                                    </div>
+                                    <div class="threshold-item">
+                                        <label for="dangerThreshold">Danger at</label>
+                                        <input type="number" id="dangerThreshold" name="dangerThreshold"
+                                            class="form-input-sm" value="90" min="80" max="95">
+                                        <span>% used</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="safe-limit-preview glass-card-inner">
+                                <span class="preview-label">With current settings, your safe daily spend is:</span>
+                                <span class="preview-value" id="safeLimitPreview">₹200</span>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Save Preferences</button>
+                            </div>
+                        </form>
+
+                        <div class="data-actions glass-card">
+                            <h4>Data Management</h4>
+                            <div class="action-buttons">
+                                <button class="btn btn-secondary" id="exportDataBtn">
+                                    📤 Export Data
+                                </button>
+                                <label class="btn btn-secondary">
+                                    📥 Import Data
+                                    <input type="file" id="importDataInput" accept=".json" hidden>
+                                </label>
+                                <button class="btn btn-danger" id="clearDataBtn">
+                                    🗑️ Clear All Data
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- History Section -->
+        <section id="history" class="history-section hidden">
+            <div class="history-container">
+                <div class="history-header">
+                    <h2 class="section-title">Recent Expenses</h2>
+                    <span class="expense-count" id="expenseCount">0 entries</span>
+                </div>
+                <div class="expenses-list" id="expensesList">
+                    <div class="expenses-empty" id="expensesEmpty">
+                        <span class="empty-icon">📝</span>
+                        <p>No expenses recorded yet. Add your first expense to start tracking!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay" id="confirmModal" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="modal glass-card">
+            <h3 class="modal-title" id="confirmTitle">Confirm Action</h3>
+            <p class="modal-message" id="confirmMessage">Are you sure?</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="confirmCancel">Cancel</button>
+                <button class="btn btn-danger" id="confirmOk">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="charts.js"></script>
+</body>
+
+</html>

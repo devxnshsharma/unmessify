@@ -1,0 +1,1583 @@
+/* ========================================
+   UNMESSIFY - Bauhaus Design System
+   ======================================== */
+
+/* --------------------------------------
+   Google Fonts Import
+   -------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;900&display=swap');
+
+/* --------------------------------------
+   CSS Custom Properties (Bauhaus Tokens)
+   -------------------------------------- */
+:root {
+    /* Primary Bauhaus Colors */
+    --primary-red: #D02020;
+    --primary-blue: #1040C0;
+    --primary-yellow: #F0C020;
+
+    /* Neutrals */
+    --background: #F0F0F0;
+    --foreground: #121212;
+    --white: #FFFFFF;
+    --muted: #E0E0E0;
+    --border: #121212;
+
+    /* Semantic Colors (using Bauhaus primaries) */
+    --safe: #10B981;
+    --safe-surface: rgba(16, 185, 129, 0.15);
+    --risk: #F0C020;
+    --risk-surface: rgba(240, 192, 32, 0.15);
+    --danger: #D02020;
+    --danger-surface: rgba(208, 32, 32, 0.15);
+
+    /* Typography */
+    --font-sans: 'Outfit', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Font Sizes */
+    --font-xs: 0.75rem;
+    --font-sm: 0.875rem;
+    --font-md: 1rem;
+    --font-lg: 1.125rem;
+    --font-xl: 1.25rem;
+    --font-2xl: 1.5rem;
+    --font-3xl: 2rem;
+    --font-4xl: 2.5rem;
+
+    /* Spacing */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-10: 40px;
+    --space-12: 48px;
+
+    /* Borders */
+    --border-thin: 2px;
+    --border-thick: 4px;
+
+    /* Shadows (Hard Offset) */
+    --shadow-sm: 3px 3px 0px 0px var(--foreground);
+    --shadow-md: 4px 4px 0px 0px var(--foreground);
+    --shadow-lg: 6px 6px 0px 0px var(--foreground);
+    --shadow-xl: 8px 8px 0px 0px var(--foreground);
+
+    /* Transitions */
+    --transition-fast: 200ms ease-out;
+    --transition-normal: 300ms ease-out;
+}
+
+/* --------------------------------------
+   Reset & Base Styles
+   -------------------------------------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-sans);
+    font-size: var(--font-md);
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--foreground);
+    background: var(--background);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Bauhaus Background Pattern */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(var(--muted) 1.5px, transparent 1.5px);
+    background-size: 24px 24px;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* --------------------------------------
+   Utility Classes
+   -------------------------------------- */
+.hidden {
+    display: none !important;
+}
+
+/* --------------------------------------
+   Header & Status Strip
+   -------------------------------------- */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-4) var(--space-6);
+    background: var(--white);
+    border-bottom: var(--border-thick) solid var(--border);
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--font-2xl);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--foreground);
+}
+
+/* Geometric Logo Shapes */
+.logo::before {
+    content: '';
+    display: flex;
+    gap: 4px;
+}
+
+.logo-shapes {
+    display: flex;
+    gap: 4px;
+    margin-right: var(--space-2);
+}
+
+.logo-shapes .shape {
+    width: 16px;
+    height: 16px;
+}
+
+.logo-shapes .circle {
+    background: var(--primary-red);
+    border-radius: 50%;
+}
+
+.logo-shapes .square {
+    background: var(--primary-blue);
+}
+
+.logo-shapes .triangle {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 16px solid var(--primary-yellow);
+}
+
+.logo-accent {
+    color: var(--primary-blue);
+}
+
+.tagline {
+    font-size: var(--font-xs);
+    font-weight: 700;
+    color: var(--foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: var(--space-1) var(--space-2);
+    background: var(--primary-yellow);
+    border: var(--border-thin) solid var(--border);
+}
+
+.status-strip {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-5);
+    background: var(--white);
+    border: var(--border-thick) solid var(--border);
+    box-shadow: var(--shadow-md);
+}
+
+.status-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+}
+
+.status-label {
+    font-size: var(--font-xs);
+    font-weight: 700;
+    color: var(--foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.status-value {
+    font-family: var(--font-mono);
+    font-size: var(--font-lg);
+    font-weight: 700;
+    color: var(--foreground);
+}
+
+.status-value.highlight {
+    color: var(--primary-blue);
+}
+
+.status-divider {
+    width: 2px;
+    height: 32px;
+    background: var(--border);
+}
+
+/* Risk Badge - Bauhaus Style */
+.risk-badge-container {
+    margin-left: var(--space-2);
+}
+
+.risk-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--font-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: help;
+    border: var(--border-thin) solid var(--border);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-fast);
+}
+
+.risk-icon {
+    font-size: var(--font-xs);
+}
+
+.badge-safe {
+    background: var(--safe);
+    color: var(--white);
+}
+
+.badge-risk {
+    background: var(--primary-yellow);
+    color: var(--foreground);
+}
+
+.badge-danger {
+    background: var(--primary-red);
+    color: var(--white);
+}
+
+/* --------------------------------------
+   Main Container
+   -------------------------------------- */
+.main-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--space-6);
+}
+
+/* --------------------------------------
+   Onboarding Screen - Bauhaus Hero
+   -------------------------------------- */
+.onboarding-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    position: relative;
+}
+
+.onboarding-card {
+    text-align: center;
+    max-width: 520px;
+    padding: var(--space-12);
+    background: var(--white);
+    border: var(--border-thick) solid var(--border);
+    box-shadow: var(--shadow-xl);
+    position: relative;
+}
+
+/* Geometric decorations */
+.onboarding-card::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 60px;
+    height: 60px;
+    background: var(--primary-red);
+    border-radius: 50%;
+    border: var(--border-thick) solid var(--border);
+}
+
+.onboarding-card::after {
+    content: '';
+    position: absolute;
+    bottom: -16px;
+    left: -16px;
+    width: 48px;
+    height: 48px;
+    background: var(--primary-blue);
+    transform: rotate(45deg);
+    border: var(--border-thick) solid var(--border);
+}
+
+.onboarding-icon {
+    font-size: 4rem;
+    margin-bottom: var(--space-6);
+}
+
+.onboarding-card h2 {
+    font-size: var(--font-4xl);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    margin-bottom: var(--space-4);
+    color: var(--foreground);
+}
+
+.onboarding-card p {
+    font-size: var(--font-lg);
+    color: var(--foreground);
+    margin-bottom: var(--space-8);
+    line-height: 1.7;
+}
+
+/* --------------------------------------
+   Dashboard Grid
+   -------------------------------------- */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+    margin-bottom: var(--space-8);
+}
+
+.dashboard-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.column-title {
+    font-size: var(--font-lg);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--foreground);
+    padding-bottom: var(--space-2);
+    border-bottom: var(--border-thick) solid var(--border);
+    margin-bottom: var(--space-2);
+}
+
+/* --------------------------------------
+   Metric Cards - Bauhaus Style
+   -------------------------------------- */
+.metric-card,
+.prediction-card,
+.chart-card {
+    padding: var(--space-5);
+    background: var(--white);
+    border: var(--border-thick) solid var(--border);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    transition: transform var(--transition-fast);
+}
+
+.metric-card:hover,
+.prediction-card:hover,
+.chart-card:hover {
+    transform: translateY(-4px);
+}
+
+/* Geometric corner decoration */
+.metric-card::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 12px;
+    height: 12px;
+    background: var(--primary-blue);
+}
+
+.metric-card:nth-child(2)::before {
+    background: var(--primary-red);
+    border-radius: 50%;
+}
+
+.metric-card:nth-child(3)::before {
+    background: var(--primary-yellow);
+    transform: rotate(45deg);
+}
+
+.metric-header,
+.prediction-header,
+.chart-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+}
+
+.metric-icon,
+.prediction-icon {
+    font-size: var(--font-xl);
+}
+
+.metric-title,
+.prediction-title,
+.chart-title {
+    font-size: var(--font-md);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--foreground);
+}
+
+.metric-body,
+.prediction-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.metric-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.metric-value {
+    font-family: var(--font-mono);
+    font-size: var(--font-3xl);
+    font-weight: 700;
+    color: var(--foreground);
+}
+
+.metric-comparison {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--space-1);
+}
+
+.comparison-label {
+    font-size: var(--font-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--foreground);
+}
+
+.comparison-value {
+    font-family: var(--font-mono);
+    font-size: var(--font-md);
+    font-weight: 700;
+    color: var(--safe);
+}
+
+.metric-hint {
+    font-size: var(--font-sm);
+    font-weight: 500;
+    color: var(--foreground);
+    opacity: 0.7;
+}
+
+/* Progress Bar - Bauhaus */
+.progress-bar {
+    height: 12px;
+    background: var(--muted);
+    border: var(--border-thin) solid var(--border);
+}
+
+.progress-fill {
+    height: 100%;
+    transition: width var(--transition-normal);
+}
+
+.progress-fill.safe {
+    background: var(--safe);
+}
+
+.progress-fill.risk {
+    background: var(--primary-yellow);
+}
+
+.progress-fill.danger {
+    background: var(--primary-red);
+}
+
+/* Burn Rate Display */
+.burn-rate-display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+}
+
+.burn-rate-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    flex: 1;
+}
+
+.burn-label {
+    font-size: var(--font-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--foreground);
+}
+
+.burn-value {
+    font-family: var(--font-mono);
+    font-size: var(--font-lg);
+    font-weight: 700;
+}
+
+.burn-value.target {
+    color: var(--safe);
+}
+
+.burn-vs {
+    font-weight: 700;
+    color: var(--foreground);
+    font-size: var(--font-sm);
+}
+
+.burn-rate-detail {
+    display: flex;
+    justify-content: space-between;
+    padding-top: var(--space-3);
+    border-top: var(--border-thin) solid var(--border);
+}
+
+.detail-label {
+    font-size: var(--font-sm);
+    font-weight: 500;
+    color: var(--foreground);
+}
+
+.detail-value {
+    font-family: var(--font-mono);
+    font-size: var(--font-sm);
+    font-weight: 700;
+    color: var(--foreground);
+}
+
+/* Month Progress */
+.month-progress-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.days-info {
+    font-size: var(--font-md);
+    font-weight: 700;
+}
+
+.credits-percent {
+    font-family: var(--font-mono);
+    font-size: var(--font-sm);
+    font-weight: 700;
+    color: var(--foreground);
+}
+
+.dual-progress {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.progress-track {
+    height: 8px;
+    background: var(--muted);
+    border: var(--border-thin) solid var(--border);
+}
+
+.progress-section {
+    height: 100%;
+    transition: width var(--transition-normal);
+}
+
+.progress-section.time {
+    background: var(--primary-blue);
+}
+
+.progress-section.credits {
+    background: var(--safe);
+}
+
+.progress-section.credits.danger {
+    background: var(--primary-red);
+}
+
+.progress-legend {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-2);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--font-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--foreground);
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border: var(--border-thin) solid var(--border);
+}
+
+.legend-dot.time {
+    background: var(--primary-blue);
+}
+
+.legend-dot.credits {
+    background: var(--safe);
+}
+
+/* --------------------------------------
+   Prediction Cards
+   -------------------------------------- */
+.prediction-card::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 16px;
+    height: 16px;
+    background: var(--primary-yellow);
+    border-radius: 50%;
+}
+
+.prediction-main {
+    text-align: center;
+    padding: var(--space-4) 0;
+    background: var(--muted);
+    border: var(--border-thin) solid var(--border);
+}
+
+.prediction-date {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: var(--font-4xl);
+    font-weight: 900;
+    color: var(--foreground);
+    margin-bottom: var(--space-2);
+}
+
+.prediction-label {
+    font-size: var(--font-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--foreground);
+}
+
+.prediction-detail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    background: var(--muted);
+    border: var(--border-thin) solid var(--border);
+}
+
+.detail-icon {
+    font-size: var(--font-lg);
+}
+
+.detail-text {
+    font-size: var(--font-sm);
+    font-weight: 500;
+    color: var(--foreground);
+}
+
+.confidence-tag {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-2);
+    font-size: var(--font-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--foreground);
+    opacity: 0.7;
+}
+
+/* --------------------------------------
+   Chart Cards
+   -------------------------------------- */
+.chart-container {
+    position: relative;
+    height: 200px;
+}
+
+.chart-container-donut {
+    height: 180px;
+}
+
+.chart-empty {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    background: var(--muted);
+    border: var(--border-thin) dashed var(--border);
+}
+
+.empty-icon {
+    font-size: 2rem;
+    opacity: 0.5;
+}
+
+.empty-text {
+    font-size: var(--font-sm);
+    font-weight: 500;
+    color: var(--foreground);
+    opacity: 0.7;
+}
+
+/* --------------------------------------
+   Advice Panel - Bauhaus Color Blocks
+   -------------------------------------- */
+.advice-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.advice-card {
+    padding: var(--space-4);
+    border: var(--border-thick) solid var(--border);
+    box-shadow: var(--shadow-md);
+    transition: transform var(--transition-fast);
+}
+
+.advice-card:hover {
+    transform: translateY(-2px);
+}
+
+.advice-card.high {
+    background: var(--primary-red);
+    color: var(--white);
+}
+
+.advice-card.medium {
+    background: var(--primary-yellow);
+    color: var(--foreground);
+}
+
+.advice-card.low {
+    background: var(--primary-blue);
+    color: var(--white);
+}
+
+.advice-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-2);
+}
+
+.advice-title {
+    font-size: var(--font-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.advice-severity {
+    font-size: var(--font-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: var(--space-1) var(--space-2);
+    background: var(--white);
+    color: var(--foreground);
+    border: var(--border-thin) solid var(--border);
+}
+
+.advice-message {
+    font-size: var(--font-sm);
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.advice-empty {
+    text-align: center;
+    padding: var(--space-8);
+    background: var(--white);
+    border: var(--border-thick) solid var(--border);
+    box-shadow: var(--shadow-md);
+}
+
+.advice-empty-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: var(--space-4);
+}
+
+.advice-empty p {
+    font-weight: 500;
+    color: var(--foreground);
+}
+
+/* --------------------------------------
+   Forms Section - Bauhaus Tabs
+   -------------------------------------- */
+.forms-section {
+    margin-bottom: var(--space-8);
+}
+
+.forms-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: var(--space-4);
+    border: var(--border-thick) solid var(--border);
+}
+
+.tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    background: var(--white);
+    border: none;
+    border-right: var(--border-thin) solid var(--border);
+    font-family: inherit;
+    font-size: var(--font-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--foreground);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.tab:last-child {
+    border-right: none;
+}
+
+.tab:hover {
+    background: var(--muted);
+}
+
+.tab.active {
+    background: var(--primary-blue);
+    color: var(--white);
+}
+
+.tab-icon {
+    font-size: var(--font-lg);
+}
+
+.tab-panels {
+    position: relative;
+}
+
+.tab-panel {
+    display: none;
+}
+
+.tab-panel.active {
+    display: block;
+    animation: fadeIn var(--transition-normal);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Forms - Bauhaus */
+.form {
+    padding: var(--space-6);
+    background: var(--white);
+    border: var(--border-thick) solid var(--border);
+    box-shadow: var(--shadow-xl);
+}
+
+.form-title {
+    font-size: var(--font-xl);
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-4);
+    border-bottom: var(--border-thick) solid var(--border);
+}
+
+.form-group {
+    margin-bottom: var(--space-5);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+}
+
+.form-label {
+    display: block;
+    font-size: var(--font-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--foreground);
+    margin-bottom: var(--space-2);
+}
+
+.form-input,
+.form-select {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    background: var(--white);
+    border: var(--border-thin) solid var(--border);
+    font-family: var(--font-mono);
+    font-size: var(--font-md);
+    font-weight: 500;
+    color: var(--foreground);
+    transition: all var(--transition-fast);
+}
+
+.form-input:focus,
+.form-select:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: var(--shadow-sm);
+}
+
+.form-input::placeholder {
+    color: var(--foreground);
+    opacity: 0.4;
+}
+
+.form-input-sm {
+    width: 80px;
+    padding: var(--space-2);
+    text-align: center;
+}
+
+.form-hint {
+    display: block;
+    font-size: var(--font-xs);
+    font-weight: 500;
+    color: var(--foreground);
+    opacity: 0.6;
+    margin-top: var(--space-1);
+}
+
+.form-error {
+    display: block;
+    font-size: var(--font-xs);
+    font-weight: 700;
+    color: var(--primary-red);
+    margin-top: var(--space-1);
+    min-height: 1.2em;
+}
+
+.form-input.error,
+.form-select.error {
+    border-color: var(--primary-red);
+    background: var(--danger-surface);
+}
+
+/* Radio & Checkbox Groups */
+.radio-group,
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+}
+
+.radio-label,
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    cursor: pointer;
+}
+
+.radio-text,
+.checkbox-text {
+    font-size: var(--font-sm);
+    font-weight: 500;
+    color: var(--foreground);
+}
+
+.checkbox-box {
+    width: 20px;
+    height: 20px;
+    border: var(--border-thin) solid var(--border);
+    background: var(--white);
+    transition: all var(--transition-fast);
+}
+
+input[type="checkbox"]:checked+.checkbox-box {
+    background: var(--primary-blue);
+}
+
+input[type="checkbox"]:checked+.checkbox-box::after {
+    content: '✓';
+    display: block;
+    text-align: center;
+    color: white;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+/* Threshold Group */
+.threshold-group {
+    display: flex;
+    gap: var(--space-6);
+}
+
+.threshold-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--font-sm);
+    font-weight: 500;
+    color: var(--foreground);
+}
+
+/* Safe Limit Preview */
+.safe-limit-preview {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--space-6);
+    margin-bottom: var(--space-4);
+    padding: var(--space-4);
+    background: var(--primary-yellow);
+    border: var(--border-thin) solid var(--border);
+}
+
+.preview-label {
+    font-size: var(--font-sm);
+    font-weight: 700;
+    color: var(--foreground);
+}
+
+.preview-value {
+    font-family: var(--font-mono);
+    font-size: var(--font-xl);
+    font-weight: 900;
+    color: var(--foreground);
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    padding-top: var(--space-4);
+    border-top: var(--border-thick) solid var(--border);
+}
+
+/* Data Actions */
+.data-actions {
+    padding: var(--space-5);
+    margin-top: var(--space-4);
+    background: var(--white);
+    border: var(--border-thick) solid var(--border);
+    box-shadow: var(--shadow-md);
+}
+
+.data-actions h4 {
+    font-size: var(--font-md);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: var(--space-4);
+}
+
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+}
+
+/* --------------------------------------
+   Buttons - Bauhaus
+   -------------------------------------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-5);
+    border: var(--border-thin) solid var(--border);
+    font-family: inherit;
+    font-size: var(--font-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-fast);
+}
+
+.btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: none;
+}
+
+.btn-primary {
+    background: var(--primary-red);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background: #B01818;
+}
+
+.btn-secondary {
+    background: var(--white);
+    color: var(--foreground);
+}
+
+.btn-secondary:hover {
+    background: var(--muted);
+}
+
+.btn-danger {
+    background: var(--primary-red);
+    color: var(--white);
+}
+
+.btn-danger:hover {
+    background: #B01818;
+}
+
+.btn-lg {
+    padding: var(--space-4) var(--space-8);
+    font-size: var(--font-md);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* --------------------------------------
+   History Section
+   -------------------------------------- */
+.history-section {
+    margin-bottom: var(--space-8);
+}
+
+.history-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-4);
+}
+
+.section-title {
+    font-size: var(--font-xl);
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.expense-count {
+    font-size: var(--font-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: var(--space-2) var(--space-3);
+    background: var(--primary-blue);
+    color: var(--white);
+    border: var(--border-thin) solid var(--border);
+}
+
+.expenses-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.expense-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    background: var(--white);
+    border: var(--border-thick) solid var(--border);
+    box-shadow: var(--shadow-md);
+    transition: transform var(--transition-fast);
+}
+
+.expense-card:hover {
+    transform: translateY(-2px);
+}
+
+.expense-date {
+    text-align: center;
+    min-width: 60px;
+    padding: var(--space-2);
+    background: var(--primary-yellow);
+    border: var(--border-thin) solid var(--border);
+}
+
+.expense-date-day {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: var(--font-2xl);
+    font-weight: 900;
+    color: var(--foreground);
+}
+
+.expense-date-month {
+    font-size: var(--font-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--foreground);
+}
+
+.expense-divider {
+    width: 2px;
+    height: 40px;
+    background: var(--border);
+}
+
+.expense-details {
+    flex: 1;
+}
+
+.expense-item-name {
+    font-weight: 700;
+    color: var(--foreground);
+    margin-bottom: var(--space-1);
+}
+
+.expense-meta {
+    display: flex;
+    gap: var(--space-3);
+    font-size: var(--font-sm);
+    font-weight: 500;
+    color: var(--foreground);
+    opacity: 0.7;
+}
+
+.expense-cost {
+    font-family: var(--font-mono);
+    font-size: var(--font-lg);
+    font-weight: 900;
+    color: var(--foreground);
+}
+
+.expense-actions {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.expense-action-btn {
+    padding: var(--space-2);
+    background: var(--white);
+    border: var(--border-thin) solid var(--border);
+    color: var(--foreground);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.expense-action-btn:hover {
+    background: var(--muted);
+}
+
+.expense-action-btn.delete:hover {
+    background: var(--primary-red);
+    color: var(--white);
+}
+
+.expenses-empty {
+    text-align: center;
+    padding: var(--space-10);
+    background: var(--white);
+    border: var(--border-thick) dashed var(--border);
+}
+
+.expenses-empty .empty-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: var(--space-4);
+}
+
+.expenses-empty p {
+    font-weight: 500;
+    color: var(--foreground);
+}
+
+/* --------------------------------------
+   Toast Notifications - Bauhaus
+   -------------------------------------- */
+.toast-container {
+    position: fixed;
+    bottom: var(--space-6);
+    right: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    z-index: 1000;
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    background: var(--white);
+    border: var(--border-thick) solid var(--border);
+    box-shadow: var(--shadow-lg);
+    animation: slideIn var(--transition-normal);
+}
+
+.toast.success {
+    border-left: 6px solid var(--safe);
+}
+
+.toast.warning {
+    border-left: 6px solid var(--primary-yellow);
+}
+
+.toast.error {
+    border-left: 6px solid var(--primary-red);
+}
+
+.toast-icon {
+    font-size: var(--font-xl);
+}
+
+.toast-message {
+    font-size: var(--font-sm);
+    font-weight: 500;
+    color: var(--foreground);
+}
+
+.toast-close {
+    padding: var(--space-1);
+    background: transparent;
+    border: none;
+    color: var(--foreground);
+    cursor: pointer;
+    font-size: var(--font-lg);
+    font-weight: 700;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* --------------------------------------
+   Modal - Bauhaus
+   -------------------------------------- */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(18, 18, 18, 0.8);
+    z-index: 1100;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-normal);
+}
+
+.modal-overlay[aria-hidden="false"] {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal {
+    max-width: 400px;
+    padding: var(--space-6);
+    text-align: center;
+    background: var(--white);
+    border: var(--border-thick) solid var(--border);
+    box-shadow: var(--shadow-xl);
+}
+
+.modal-title {
+    font-size: var(--font-xl);
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: var(--space-3);
+}
+
+.modal-message {
+    font-weight: 500;
+    color: var(--foreground);
+    margin-bottom: var(--space-6);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-3);
+}
+
+/* --------------------------------------
+   Glass Card Inner (used in forms)
+   -------------------------------------- */
+.glass-card,
+.glass-card-inner {
+    background: var(--white);
+    border: var(--border-thick) solid var(--border);
+    box-shadow: var(--shadow-lg);
+}
+
+.glass-card-inner {
+    border-width: var(--border-thin);
+    box-shadow: none;
+}
+
+/* --------------------------------------
+   Responsive Design
+   -------------------------------------- */
+@media (max-width: 1200px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard-column:last-child {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        gap: var(--space-4);
+        padding: var(--space-4);
+    }
+
+    .status-strip {
+        width: 100%;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        padding: var(--space-3);
+    }
+
+    .status-divider {
+        display: none;
+    }
+
+    .main-container {
+        padding: var(--space-4);
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-column:last-child {
+        grid-column: span 1;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .tabs {
+        flex-direction: column;
+    }
+
+    .tab {
+        border-right: none;
+        border-bottom: var(--border-thin) solid var(--border);
+    }
+
+    .tab:last-child {
+        border-bottom: none;
+    }
+
+    .threshold-group {
+        flex-direction: column;
+        gap: var(--space-3);
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .action-buttons .btn {
+        width: 100%;
+    }
+
+    .onboarding-card::before,
+    .onboarding-card::after {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: var(--font-xl);
+    }
+
+    .status-value {
+        font-size: var(--font-md);
+    }
+
+    .metric-value,
+    .prediction-date {
+        font-size: var(--font-2xl);
+    }
+
+    .form {
+        padding: var(--space-4);
+    }
+}
