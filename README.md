@@ -52,7 +52,7 @@ Students on paid mess plans receive ~₹6,000–₹6,500 credits monthly. Withou
 │  ├── Category Breakdown (Donut Chart)                       │
 │  └── Credit Depletion (Area Chart)                          │
 ├─────────────────────────────────────────────────────────────┤
-│  Storage Layer (LocalStorage)                                │
+│  Storage Layer (LocalStorage)                               │
 │  └── unmessify_state_v1                                     │
 └─────────────────────────────────────────────────────────────┘
 ```
