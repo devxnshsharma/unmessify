@@ -17,6 +17,15 @@ Students on paid mess plans receive ~₹6,000–₹6,500 credits monthly. Withou
 
 **UNMESSIFY solves this** by converting raw spending data into predictive insights and actionable recommendations.
 
+## Visualiser page
+
+![Image](https://github.com/user-attachments/assets/96d1c788-41a1-4be9-8bbf-20828572c347)
+![Image](https://github.com/user-attachments/assets/016adabf-e4e9-41f5-9625-6f85ba857c07)
+![Image](https://github.com/user-attachments/assets/84a9c815-2b22-4da3-9f3e-299eacc66edc)
+![Image](https://github.com/user-attachments/assets/2a207930-8621-422b-bbbb-65368f927748)
+![Image](https://github.com/user-attachments/assets/dd4c0696-74d7-4757-b970-c04ac4c062e3)
+![Image](https://github.com/user-attachments/assets/4cf77126-b01f-4e27-acfc-afcbc4c31b56)
+
 ## ✨ Features
 
 | Feature | Description |
