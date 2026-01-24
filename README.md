@@ -34,7 +34,7 @@ Students on paid mess plans receive ~₹6,000–₹6,500 credits monthly. Withou
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                        UNMESSIFY                             │
+│                        UNMESSIFY                            │
 ├─────────────────────────────────────────────────────────────┤
 │  UI Layer (index.html + styles.css)                         │
 │  ├── Header with Status Strip                               │
@@ -42,12 +42,12 @@ Students on paid mess plans receive ~₹6,000–₹6,500 credits monthly. Withou
 │  ├── Tabbed Forms (Setup, Expense, Preferences)             │
 │  └── History Section                                        │
 ├─────────────────────────────────────────────────────────────┤
-│  Logic Layer (app.js)                                        │
+│  Logic Layer (app.js)                                       │
 │  ├── Data Models (UserProfile, ExpenseEntry, DerivedData)   │
 │  ├── Calculation Engine (Burn Rate, Safe Limit, Predictions)│
 │  └── Advice Engine (9 Rule-Based Recommendations)           │
 ├─────────────────────────────────────────────────────────────┤
-│  Visualization Layer (charts.js)                             │
+│  Visualization Layer (charts.js)                            │
 │  ├── Daily Spending Trend (Line Chart)                      │
 │  ├── Category Breakdown (Donut Chart)                       │
 │  └── Credit Depletion (Area Chart)                          │
@@ -142,6 +142,7 @@ No build process or server required!
 
 ## Future Scope
 
+- [ ] Meal Recommendation
 - [ ] Mess menu API integration
 - [ ] Browser push notifications for risk changes
 - [ ] Nutrition tracking and analysis
