@@ -14,6 +14,8 @@
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
 </head>
 
 <body>
@@ -58,25 +60,98 @@
 
     <!-- Main Content -->
     <main class="main-container">
-        <!-- Onboarding Screen -->
-        <section id="onboardingScreen" class="onboarding-screen">
-            <div class="onboarding-card glass-card">
-                <div class="onboarding-icon">🎓</div>
-                <h2>Welcome to UNMESSIFY</h2>
-                <p>Your personal mess credits coach. Set up your profile to get started with smart insights and
-                    predictions.</p>
-                <button class="btn btn-primary btn-lg" id="startSetupBtn">
-                    Start Setup →
-                </button>
+        <!-- Login/Welcome Screen -->
+        <section id="authScreen" class="auth-screen">
+            <!-- Login View (returning users) -->
+            <div class="auth-card glass-card" id="loginView">
+                <div class="auth-header">
+                    <div class="auth-icon">👋</div>
+                    <h2>Welcome back to <span class="brand-text">UNMESSIFY</span></h2>
+                    <p class="auth-tagline">Your mess credits, remembered.</p>
+                </div>
+                <div class="last-session" id="lastSession">
+                    <span class="session-icon">⏰</span>
+                    <span class="session-text" id="lastActiveText">Last active: --</span>
+                    <span class="session-credits" id="lastCreditsText">You had ₹-- remaining</span>
+                </div>
+                <div class="auth-actions">
+                    <button class="btn btn-primary btn-lg" id="continueGuestBtn">
+                        Continue as Guest →
+                    </button>
+                </div>
+                <div class="auth-divider">
+                    <span>or continue with</span>
+                </div>
+                <div class="auth-future">
+                    <button class="btn btn-secondary btn-future" disabled title="Coming Soon">
+                        📧 Email
+                    </button>
+                    <button class="btn btn-secondary btn-future" disabled title="Coming Soon">
+                        🔗 Google
+                    </button>
+                    <button class="btn btn-secondary btn-future" disabled title="Coming Soon">
+                        🎓 College ID
+                    </button>
+                </div>
+                <p class="auth-note">Guest data is stored locally on your device.</p>
+            </div>
+
+            <!-- Signup View (new users) -->
+            <div class="auth-card glass-card hidden" id="signupView">
+                <div class="auth-header">
+                    <div class="auth-icon">🎓</div>
+                    <h2>Welcome to <span class="brand-text">UNMESSIFY</span></h2>
+                    <p class="auth-tagline">We don't track you. We understand you.</p>
+                </div>
+                <form id="quickSetupForm" class="quick-setup-form">
+                    <div class="form-group">
+                        <label for="userName" class="form-label">Your Name</label>
+                        <input type="text" id="userName" name="userName" class="form-input"
+                            placeholder="What should we call you?">
+                    </div>
+                    <div class="form-group">
+                        <label for="quickCredits" class="form-label">Monthly Credits (₹)</label>
+                        <input type="number" id="quickCredits" class="form-input" placeholder="6000" value="6000"
+                            min="3000" max="10000">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Food Preference</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="quickVeg" value="false" checked>
+                                <span class="radio-text">🍗 Non-Veg</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="quickVeg" value="true">
+                                <span class="radio-text">🥗 Vegetarian</span>
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg" id="quickStartBtn">
+                        Start Your Journey →
+                    </button>
+                </form>
             </div>
         </section>
 
         <!-- Main Dashboard (Three Column Layout) -->
         <section id="dashboardSection" class="dashboard-grid hidden">
+            <!-- Delta Strip - What Changed Since Yesterday -->
+            <div class="delta-strip glass-card hidden" id="deltaStrip">
+                <div class="delta-strip-title">
+                    <span class="delta-icon">📊</span>
+                    <span>Since yesterday:</span>
+                </div>
+                <div class="delta-items" id="deltaItems">
+                    <!-- Dynamically populated -->
+                </div>
+            </div>
+
             <!-- Column 1: Today & This Month -->
             <section id="status-overview" class="dashboard-column">
                 <h2 class="column-title">Today & This Month</h2>
 
+                <!-- Today's Spend -->
                 <div class="metric-card glass-card">
                     <div class="metric-header">
                         <span class="metric-icon">📊</span>
@@ -97,6 +172,20 @@
                     </div>
                 </div>
 
+                <!-- Today's Context Card -->
+                <div class="context-card glass-card hidden" id="contextCard">
+                    <div class="context-header">
+                        <span class="context-icon">📍</span>
+                        <span class="context-title">Today at a glance</span>
+                    </div>
+                    <div class="context-body">
+                        <ul class="context-insights" id="contextInsights">
+                            <!-- Dynamically populated -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Burn Rate -->
                 <div class="metric-card glass-card">
                     <div class="metric-header">
                         <span class="metric-icon">🔥</span>
@@ -121,6 +210,7 @@
                     </div>
                 </div>
 
+                <!-- Month Progress -->
                 <div class="metric-card glass-card">
                     <div class="metric-header">
                         <span class="metric-icon">📅</span>
@@ -145,12 +235,27 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Daily Spending Trend Chart -->
+                <div class="chart-card glass-card">
+                    <div class="chart-header">
+                        <span class="chart-title">Daily Spending Trend</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="dailySpendChart"></canvas>
+                    </div>
+                    <div class="chart-empty hidden" id="dailyChartEmpty">
+                        <span class="empty-icon">📈</span>
+                        <span class="empty-text">Add expenses to see trends</span>
+                    </div>
+                </div>
             </section>
 
             <!-- Column 2: Predictions -->
             <section id="predictions" class="dashboard-column">
                 <h2 class="column-title">Predictions</h2>
 
+                <!-- 6. Credit Exhaustion (🎉 SURPLUS PROJECTED) -->
                 <div class="prediction-card glass-card" id="exhaustionCard">
                     <div class="prediction-header">
                         <span class="prediction-icon">🎯</span>
@@ -165,27 +270,45 @@
                             <span class="detail-icon">💰</span>
                             <span class="detail-text">Add expenses to see projection</span>
                         </div>
-                        <div class="confidence-tag" id="confidenceTag">
-                            <span class="confidence-icon">ℹ️</span>
-                            <span class="confidence-text">Waiting for data...</span>
+                        <!-- Confidence Meter -->
+                        <div class="confidence-meter" id="confidenceMeter">
+                            <div class="confidence-bar">
+                                <div class="confidence-fill" id="confidenceFill" style="width: 0%"></div>
+                            </div>
+                            <span class="confidence-percent" id="confidencePercent">0%</span>
+                        </div>
+                        <div class="confidence-reason" id="confidenceReason">
+                            Waiting for data...
                         </div>
                     </div>
                 </div>
 
-                <!-- Charts Container -->
-                <div class="chart-card glass-card">
-                    <div class="chart-header">
-                        <span class="chart-title">Daily Spending Trend</span>
+                <!-- Next 3 Days Forecast -->
+                <div class="forecast-card glass-card" id="forecastCard">
+                    <div class="forecast-header">
+                        <span class="forecast-icon">🔮</span>
+                        <span class="forecast-title">Next 3 Days Outlook</span>
                     </div>
-                    <div class="chart-container">
-                        <canvas id="dailySpendChart"></canvas>
-                    </div>
-                    <div class="chart-empty hidden" id="dailyChartEmpty">
-                        <span class="empty-icon">📈</span>
-                        <span class="empty-text">Add expenses to see trends</span>
+                    <div class="forecast-body" id="forecastBody">
+                        <div class="forecast-item" data-day="1">
+                            <span class="forecast-day">Tomorrow</span>
+                            <span class="forecast-safe" id="forecast1">--</span>
+                            <span class="forecast-risk safe" id="forecastRisk1">Low risk</span>
+                        </div>
+                        <div class="forecast-item" data-day="2">
+                            <span class="forecast-day">Day +2</span>
+                            <span class="forecast-safe" id="forecast2">--</span>
+                            <span class="forecast-risk" id="forecastRisk2">--</span>
+                        </div>
+                        <div class="forecast-item" data-day="3">
+                            <span class="forecast-day">Day +3</span>
+                            <span class="forecast-safe" id="forecast3">--</span>
+                            <span class="forecast-risk" id="forecastRisk3">--</span>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Credit Depletion Chart -->
                 <div class="chart-card glass-card">
                     <div class="chart-header">
                         <span class="chart-title">Credit Depletion</span>
@@ -194,12 +317,36 @@
                         <canvas id="depletionChart"></canvas>
                     </div>
                 </div>
+
+                <!-- Savings Streak Widget -->
+                <div class="streak-card glass-card" id="streakCard">
+                    <div class="streak-header">
+                        <span class="streak-icon">🔥</span>
+                        <span class="streak-title">Savings Streak</span>
+                    </div>
+                    <div class="streak-body">
+                        <div class="streak-counter">
+                            <span class="streak-number" id="streakNumber">0</span>
+                            <span class="streak-label">days under budget</span>
+                        </div>
+                        <div class="streak-badges" id="streakBadges">
+                            <span class="streak-badge" data-days="3" title="3-day streak">🥉</span>
+                            <span class="streak-badge" data-days="7" title="Week warrior">🥈</span>
+                            <span class="streak-badge" data-days="14" title="Fortnight champion">🥇</span>
+                            <span class="streak-badge" data-days="30" title="Month master">🏆</span>
+                        </div>
+                        <p class="streak-message" id="streakMessage">Start spending under your daily limit to build your
+                            streak!</p>
+                    </div>
+                </div>
+
             </section>
 
             <!-- Column 3: Advice Panel -->
             <section id="advice-panel" class="dashboard-column">
                 <h2 class="column-title">Smart Advice</h2>
 
+                <!-- 3. Daily Limit / Advice Container (✅ GREAT PROGRESS) -->
                 <div class="advice-container" id="adviceContainer">
                     <div class="advice-empty glass-card" id="adviceEmpty">
                         <span class="advice-empty-icon">💡</span>
@@ -220,7 +367,129 @@
                         <span class="empty-text">No categories to display yet</span>
                     </div>
                 </div>
+
+                <!-- What-If Simulator -->
+                <div class="simulator-card glass-card" id="simulatorCard">
+                    <div class="simulator-header">
+                        <span class="simulator-icon">⚡</span>
+                        <span class="simulator-title">What If I Spend...</span>
+                    </div>
+                    <div class="simulator-body">
+                        <div class="simulator-buttons">
+                            <button class="sim-btn" data-amount="200">₹200</button>
+                            <button class="sim-btn" data-amount="300">₹300</button>
+                            <button class="sim-btn" data-amount="400">₹400</button>
+                            <button class="sim-btn" data-amount="500">₹500</button>
+                        </div>
+                        <div class="simulator-result hidden" id="simulatorResult">
+                            <span class="sim-label">If you spend <span id="simAmount">₹0</span> tomorrow:</span>
+                            <div class="sim-impact">
+                                <span class="sim-arrow">→</span>
+                                <span id="simExhaustion">Exhaustion shifts to --</span>
+                            </div>
+                            <div class="sim-risk" id="simRisk">
+                                <span class="sim-arrow">→</span>
+                                <span>Risk becomes <span id="simRiskLevel">--</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Month Narrative -->
+                <div class="rules-card glass-card hidden" id="narrativeCard">
+                    <div class="rules-header">
+                        <span class="rules-icon">📝</span>
+                        <span class="rules-title">Month Narrative</span>
+                    </div>
+                    <div id="narrativeBody">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+
+                <!-- 4. Quick Stats Widget -->
+                <div class="quick-stats-card" id="quickStatsCard">
+                    <div class="quick-stats-header">
+                        <span class="quick-stats-icon">📊</span>
+                        <span class="quick-stats-title">Quick Stats</span>
+                    </div>
+                    <div class="quick-stats-body">
+                        <div class="quick-stat-item">
+                            <span class="stat-label">Avg per meal</span>
+                            <span class="stat-value" id="avgPerMeal">₹0</span>
+                        </div>
+                        <div class="quick-stat-item">
+                            <span class="stat-label">Most expensive day</span>
+                            <span class="stat-value" id="mostExpensiveDay">--</span>
+                        </div>
+                        <div class="quick-stat-item">
+                            <span class="stat-label">Cheapest day</span>
+                            <span class="stat-value" id="cheapestDay">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1. Personality Badge (BALANCED SPENDER) -->
+                <div class="personality-card glass-card hidden" id="personalityCard">
+                    <div class="personality-badge" id="personalityBadge">
+                        <span class="personality-icon" id="personalityIcon">🐢</span>
+                        <span class="personality-label" id="personalityLabel">Conservative Eater</span>
+                    </div>
+                    <p class="personality-desc" id="personalityDesc">You spend consistently and stay under budget.</p>
+                </div>
+
+                <!-- 2. Personal Rules (YOUR PATTERNS) -->
+                <div class="rules-card glass-card hidden" id="rulesCard">
+                    <div class="rules-header">
+                        <span class="rules-icon">🎯</span>
+                        <span class="rules-title">Your Patterns</span>
+                    </div>
+                    <ul class="rules-list" id="rulesList">
+                        <!-- Dynamically populated -->
+                    </ul>
+                </div>
+
+                <!-- 7. Budget Health Indicator -->
+                <div class="health-card" id="healthCard">
+                    <div class="health-header">
+                        <span class="health-icon">❤️</span>
+                        <span class="health-title">Budget Health</span>
+                    </div>
+                    <div class="health-body">
+                        <div class="health-meter">
+                            <div class="health-fill" id="healthFill" style="width: 75%"></div>
+                        </div>
+                        <div class="health-status">
+                            <span class="health-label" id="healthLabel">Healthy</span>
+                            <span class="health-score" id="healthScore">75/100</span>
+                        </div>
+                        <p class="health-tip" id="healthTip">Your spending is on track!</p>
+                    </div>
+                </div>
+
+                <!-- Meal Insights Widget -->
+                <div class="meal-insights-card" id="mealInsightsCard">
+                    <div class="meal-insights-header">
+                        <span class="meal-insights-icon">🍽️</span>
+                        <span class="meal-insights-title">Meal Insights</span>
+                    </div>
+                    <div class="meal-insights-body">
+                        <div class="meal-insight-item">
+                            <span class="insight-label">Top meal type</span>
+                            <span class="insight-value" id="topMealType">--</span>
+                        </div>
+                        <div class="meal-insight-item">
+                            <span class="insight-label">Meals this week</span>
+                            <span class="insight-value" id="mealsThisWeek">0</span>
+                        </div>
+                        <div class="meal-insight-item">
+                            <span class="insight-label">Favorite item</span>
+                            <span class="insight-value" id="favoriteItem">--</span>
+                        </div>
+                    </div>
+                </div>
+
             </section>
+
         </section>
 
         <!-- Forms Section -->
@@ -328,13 +597,15 @@
                                 <div class="form-group">
                                     <label for="itemType" class="form-label">Item Category</label>
                                     <select id="itemType" name="itemType" class="form-select" required>
-                                        <option value="veg">Veg Items</option>
-                                        <option value="paneer">Paneer</option>
-                                        <option value="chicken">Chicken</option>
-                                        <option value="dessert">Dessert</option>
-                                        <option value="beverage">Beverage</option>
-                                        <option value="other">Other</option>
+                                        <option value="veg">🥗 Regular Veg</option>
+                                        <option value="paneer">🧀 Paneer / Premium Veg</option>
+                                        <option value="chicken">🍗 Chicken / Meat</option>
+                                        <option value="dessert">🍰 Dessert / Sweet</option>
+                                        <option value="beverage">☕ Beverage / Coffee</option>
+                                        <option value="other">➕ Other</option>
                                     </select>
+                                    <span class="form-hint">💡 Tip: Chicken & desserts increase your burn rate
+                                        fastest</span>
                                 </div>
 
                                 <div class="form-group">
@@ -390,16 +661,16 @@
 
                             <div class="form-group">
                                 <label class="form-label">Special Modes</label>
-                                <div class="checkbox-group">
-                                    <label class="checkbox-label">
+                                <div class="checkbox-group-vertical">
+                                    <label class="checkbox-label-block">
                                         <input type="checkbox" name="weekendBoost" id="weekendBoost">
-                                        <span class="checkbox-box"></span>
-                                        <span class="checkbox-text">Weekend Boost (Higher weekend limits)</span>
+                                        <span class="checkbox-custom"></span>
+                                        <span class="checkbox-text">🎉 Weekend Boost (Higher weekend limits)</span>
                                     </label>
-                                    <label class="checkbox-label">
+                                    <label class="checkbox-label-block">
                                         <input type="checkbox" name="examMode" id="examMode">
-                                        <span class="checkbox-box"></span>
-                                        <span class="checkbox-text">Exam Mode (Account for snacks/coffee)</span>
+                                        <span class="checkbox-custom"></span>
+                                        <span class="checkbox-text">📚 Exam Mode (Account for snacks/coffee)</span>
                                     </label>
                                 </div>
                             </div>
