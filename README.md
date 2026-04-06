@@ -1,4 +1,4 @@
-# UNMESSIFY
+# 🎓 UNMESSIFY
 
 > Smart Paid Mess Credits Planner & Decision Support System
 
@@ -8,7 +8,7 @@ UNMESSIFY is a web-based decision support application that helps students optimi
 ![Version](https://img.shields.io/badge/Version-1.0.0-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-## Problem Statement
+## 🎯 Problem Statement
 
 Students on paid mess plans receive ~₹6,000–₹6,500 credits monthly. Without proper tracking:
 - Credits often run out before month-end
@@ -17,16 +17,7 @@ Students on paid mess plans receive ~₹6,000–₹6,500 credits monthly. Withou
 
 **UNMESSIFY solves this** by converting raw spending data into predictive insights and actionable recommendations.
 
-## Visualiser page
-
-![Image](https://github.com/user-attachments/assets/96d1c788-41a1-4be9-8bbf-20828572c347)
-![Image](https://github.com/user-attachments/assets/016adabf-e4e9-41f5-9625-6f85ba857c07)
-![Image](https://github.com/user-attachments/assets/84a9c815-2b22-4da3-9f3e-299eacc66edc)
-![Image](https://github.com/user-attachments/assets/2a207930-8621-422b-bbbb-65368f927748)
-![Image](https://github.com/user-attachments/assets/dd4c0696-74d7-4757-b970-c04ac4c062e3)
-![Image](https://github.com/user-attachments/assets/4cf77126-b01f-4e27-acfc-afcbc4c31b56)
-
-## Features
+## ✨ Features
 
 | Feature | Description |
 |---------|-------------|
@@ -39,7 +30,7 @@ Students on paid mess plans receive ~₹6,000–₹6,500 credits monthly. Withou
 | **LocalStorage Persistence** | Data persists across sessions |
 | **Export/Import** | Backup and restore your data as JSON |
 
-## Architecture
+## 🏗️ Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -48,6 +39,9 @@ Students on paid mess plans receive ~₹6,000–₹6,500 credits monthly. Withou
 │  UI Layer (index.html + styles.css)                         │
 │  ├── Header with Status Strip                               │
 │  ├── Dashboard (3-column layout)                            │
+│  │   ├── Col 1: Today & This Month (Spend, Burn, Progress)  │
+│  │   ├── Col 2: Predictions (Exhaustion, Outlook, Streak)   │
+│  │   └── Col 3: Smart Advice (Tips, Categories, Simulator)  │
 │  ├── Tabbed Forms (Setup, Expense, Preferences)             │
 │  └── History Section                                        │
 ├─────────────────────────────────────────────────────────────┤
@@ -66,7 +60,7 @@ Students on paid mess plans receive ~₹6,000–₹6,500 credits monthly. Withou
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## Data Models
+## 📊 Data Models
 
 ### UserProfile
 ```javascript
@@ -99,7 +93,7 @@ Students on paid mess plans receive ~₹6,000–₹6,500 credits monthly. Withou
 }
 ```
 
-## Core Calculations
+## 🧮 Core Calculations
 
 ### Daily Safe Limit
 ```
@@ -126,7 +120,7 @@ final = adjusted × toleranceFactor × modeBoosts
 | Expense Entry | Date, meal, item type, quantity, cost | Date within month, not future; Cost: ₹1-₹2,000 |
 | Preferences | Risk tolerance, daily cap, modes, thresholds | Logical bounds, live preview |
 
-## Quick Start
+## 🚀 Quick Start
 
 1. **Clone or download** this repository
 2. **Open `index.html`** in any modern browser
@@ -136,22 +130,21 @@ final = adjusted × toleranceFactor × modeBoosts
 
 No build process or server required!
 
-## Browser Support
+## 🌐 Browser Support
 
 - Chrome 80+
 - Firefox 75+
 - Safari 13+
 - Edge 80+
 
-## Dependencies
+## 📦 Dependencies
 
 - [Chart.js](https://www.chartjs.org/) v4.x (loaded via CDN)
 - [Inter Font](https://fonts.google.com/specimen/Inter) (Google Fonts)
 - [JetBrains Mono](https://fonts.google.com/specimen/JetBrains+Mono) (Google Fonts)
 
-## Future Scope
+## 🔮 Future Scope
 
-- [ ] Meal Recommendation
 - [ ] Mess menu API integration
 - [ ] Browser push notifications for risk changes
 - [ ] Nutrition tracking and analysis
@@ -159,9 +152,9 @@ No build process or server required!
 - [ ] Mobile app (React Native / Flutter)
 - [ ] Multi-month trend analysis
 
-## License
+## 📄 License
 
-MIT License 
+MIT License - feel free to use and modify for your needs.
 
 ---
 
