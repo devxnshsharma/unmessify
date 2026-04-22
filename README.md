@@ -8,7 +8,7 @@ UNMESSIFY is a web-based decision support application that helps students optimi
 ![Version](https://img.shields.io/badge/Version-1.0.0-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-## 🎯 Problem Statement
+## Problem Statement
 
 Students on paid mess plans receive ~₹6,000–₹6,500 credits monthly. Without proper tracking:
 - Credits often run out before month-end
@@ -17,7 +17,7 @@ Students on paid mess plans receive ~₹6,000–₹6,500 credits monthly. Withou
 
 **UNMESSIFY solves this** by converting raw spending data into predictive insights and actionable recommendations.
 
-## ✨ Features
+## Features
 
 | Feature | Description |
 |---------|-------------|
@@ -39,7 +39,7 @@ Students on paid mess plans receive ~₹6,000–₹6,500 credits monthly. Withou
 ![Image](https://github.com/user-attachments/assets/dd4c0696-74d7-4757-b970-c04ac4c062e3)
 ![Image](https://github.com/user-attachments/assets/4cf77126-b01f-4e27-acfc-afcbc4c31b56)
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -69,7 +69,7 @@ Students on paid mess plans receive ~₹6,000–₹6,500 credits monthly. Withou
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## 📊 Data Models
+## Data Models
 
 ### UserProfile
 ```javascript
@@ -102,7 +102,7 @@ Students on paid mess plans receive ~₹6,000–₹6,500 credits monthly. Withou
 }
 ```
 
-## 🧮 Core Calculations
+## Core Calculations
 
 ### Daily Safe Limit
 ```
@@ -121,7 +121,7 @@ final = adjusted × toleranceFactor × modeBoosts
 - **Watch**: Usage 5-15% ahead of schedule
 - **Danger**: Usage >15% ahead OR exhaustion before month-end
 
-## 📋 Forms & Validation
+## Forms & Validation
 
 | Form | Fields | Validation |
 |------|--------|------------|
@@ -129,7 +129,7 @@ final = adjusted × toleranceFactor × modeBoosts
 | Expense Entry | Date, meal, item type, quantity, cost | Date within month, not future; Cost: ₹1-₹2,000 |
 | Preferences | Risk tolerance, daily cap, modes, thresholds | Logical bounds, live preview |
 
-## 🚀 Quick Start
+## Quick Start
 
 1. **Clone or download** this repository
 2. **Open `index.html`** in any modern browser
@@ -139,20 +139,20 @@ final = adjusted × toleranceFactor × modeBoosts
 
 No build process or server required!
 
-## 🌐 Browser Support
+## Browser Support
 
 - Chrome 80+
 - Firefox 75+
 - Safari 13+
 - Edge 80+
 
-## 📦 Dependencies
+## Dependencies
 
 - [Chart.js](https://www.chartjs.org/) v4.x (loaded via CDN)
 - [Inter Font](https://fonts.google.com/specimen/Inter) (Google Fonts)
 - [JetBrains Mono](https://fonts.google.com/specimen/JetBrains+Mono) (Google Fonts)
 
-## 🔮 Future Scope
+## Future Scope
 
 - [ ] Mess menu API integration
 - [ ] Browser push notifications for risk changes
@@ -161,7 +161,7 @@ No build process or server required!
 - [ ] Mobile app (React Native / Flutter)
 - [ ] Multi-month trend analysis
 
-## 📄 License
+## License
 
 MIT License - feel free to use and modify for your needs.
 
