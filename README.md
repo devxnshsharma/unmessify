@@ -1,4 +1,6 @@
-# 🎓 UNMESSIFY
+<h1 align="center">
+🎓 UNMESSIFY
+</h1>
 
 > Smart Paid Mess Credits Planner & Decision Support System
 
